@@ -250,11 +250,11 @@ const pay = async () => {
   } else {
     //if there is no error, send request to our server to store a new order in the database
     //this allows us to track the order
-    await createOrder(result.paymentIntent.id);
-
-    setTimeout(() => {
-      return navigateTo("/success");
-    }, 500);
+    await createOrder(result.paymentIntent.id).then(() => {
+      setTimeout(() => {
+        return navigateTo("/success");
+      }, 500);
+    });
   }
 };
 
