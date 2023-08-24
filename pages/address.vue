@@ -62,7 +62,7 @@
 import MainLayout from "~/layouts/MainLayout.vue";
 import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
-// const user = useSupabaseUser()
+const user = useSupabaseUser();
 
 let contactName = ref(null);
 let address = ref(null);
@@ -75,24 +75,28 @@ let isUpdate = ref(false);
 let isWorking = ref(false);
 let error = ref(null);
 
-// watchEffect(async () => {
-//     currentAddress.value = await useFetch(`/api/prisma/get-address-by-user/${user.value.id}`)
+watchEffect(async () => {
+  currentAddress.value = await useFetch(
+    `/api/prisma/get-address-by-user/${user.value.id}`
+  );
 
-//     if (currentAddress.value.data) {
-//         contactName.value = currentAddress.value.data.name
-//         address.value = currentAddress.value.data.address
-//         zipCode.value = currentAddress.value.data.zipcode
-//         city.value = currentAddress.value.data.city
-//         country.value = currentAddress.value.data.country
+  //check if user already has address to determine if submit action is an address update or creation
+  if (currentAddress.value.data) {
+    contactName.value = currentAddress.value.data.name;
+    address.value = currentAddress.value.data.address;
+    zipCode.value = currentAddress.value.data.zipcode;
+    city.value = currentAddress.value.data.city;
+    country.value = currentAddress.value.data.country;
 
-//         isUpdate.value = true
-//     }
+    isUpdate.value = true;
+  }
 
-//     userStore.isLoading = false
-// })
+  userStore.isLoading = false;
+});
 
 const submit = async () => {
-  isWorking.value = true;
+  //submit the values entered, checking for empty fields
+  isWorking.value = true; //set local loading indicator
   error.value = null;
 
   if (!contactName.value) {
@@ -127,6 +131,7 @@ const submit = async () => {
     return;
   }
 
+  //depending on if action is update or creation, send request to correct endpoint
   if (isUpdate.value) {
     await useFetch(
       `/api/prisma/update-address/${currentAddress.value.data.id}`,
