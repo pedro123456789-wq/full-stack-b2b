@@ -137,6 +137,7 @@ let total = ref(0);
 let clientSecret = null;
 let currentAddress = ref(null);
 let isProcessing = ref(false);
+let order = ref(null);
 
 onBeforeMount(async () => {
   //check if users have any items in their cart, if they don't redirect them to the shopping cart page
@@ -250,11 +251,13 @@ const pay = async () => {
   } else {
     //if there is no error, send request to our server to store a new order in the database
     //this allows us to track the order
-    await createOrder(result.paymentIntent.id).then(() => {
-      setTimeout(() => {
-        return navigateTo("/success");
-      }, 500);
-    });
+    await createOrder(result.paymentIntent.id);
+    userStore.cart = [];
+    userStore.checkout = [];
+
+    setTimeout(() => {
+      return navigateTo("/success");
+    }, 500);
   }
 };
 
