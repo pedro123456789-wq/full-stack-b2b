@@ -27,6 +27,8 @@
             <div class="text-2xl font-bold mb-2">
               Shopping Cart ({{ userStore.cart.length }})
             </div>
+
+            <p>Select the items to checkout with</p>
           </div>
 
           <div class="bg-[#FEEEEF] rounded-lg p-4 mt-4">
