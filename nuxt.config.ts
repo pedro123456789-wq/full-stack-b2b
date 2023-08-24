@@ -1,12 +1,15 @@
 export default defineNuxtConfig({
   pages: true,
+  experimental: {
+    payloadExtraction: false,
+  },
   modules: [
     "nuxt-icon",
     "nuxt-lodash",
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/tailwindcss",
-    //"@nuxtjs/supabase",
+    "@nuxtjs/supabase",
   ],
   runtimeConfig: {
     public: {

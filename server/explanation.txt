@@ -1,0 +1,7 @@
+Nuxt JS scans the ./server directory to register api and server handlers
+The urls of the server endpoints are defined automatically by nuxt through the folder structure
+
+Using the useFetch hook, requests are sent to the server and the 
+response is fetched before the page rendered and sent to the user.
+This way the user is not aware that an external server was used, since they
+only see the get request sent to get the page.
