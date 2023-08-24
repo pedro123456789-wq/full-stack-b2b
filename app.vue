@@ -19,7 +19,6 @@
 <script setup>
 import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
-
 const route = useRoute();
 
 let windowWidth = ref(process.client ? window.innerWidth : "");
@@ -31,6 +30,7 @@ onMounted(() => {
   });
 });
 
+//toggle the mobile side menu off when the window size is large enough
 watch(
   () => windowWidth.value,
   () => {

@@ -2,16 +2,11 @@
   <MainLayout>
     <div id="ShoppingCartPage" class="mt-4 max-w-[1200px] mx-auto px-2">
       <div
-        v-if="!products.length"
+        v-if="!userStore.cart.length"
         class="h-[500px] flex items-center justify-center"
       >
         <div class="pt-20">
-          <img
-            class="mx-auto"
-            width="250"
-            src="/cart-empty.png"
-            alt="empty cart"
-          />
+          <img class="mx-auto" width="250" src="/cart-empty.png" />
 
           <div class="text-xl text-center mt-4">No items yet?</div>
 
@@ -30,7 +25,7 @@
         <div class="md:w-[65%]">
           <div class="bg-white rounded-lg p-4">
             <div class="text-2xl font-bold mb-2">
-              Shopping Cart ({{ products.length }})
+              Shopping Cart ({{ userStore.cart.length }})
             </div>
           </div>
 
@@ -41,7 +36,7 @@
           </div>
 
           <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-            <div v-for="product in products">
+            <div v-for="product in userStore.cart">
               <CartItem
                 :product="product"
                 :selectedArray="selectedArray"
@@ -73,7 +68,7 @@
             <div class="text-lg font-semibold mb-2">Payment methods</div>
             <div class="flex items-center justify-start gap-8 my-4">
               <div v-for="card in cards">
-                <img class="h-6" :src="card" alt="card" />
+                <img class="h-6" :src="card" />
               </div>
             </div>
 
@@ -95,25 +90,7 @@
 import MainLayout from "~/layouts/MainLayout.vue";
 import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
-const user = "u";
-// const user = useSupabaseUser();
-
-const products = [
-  {
-    id: 1,
-    title: "test product",
-    description: "desc",
-    url: "https://picsum.photos/id/82/300/300",
-    price: 1000, //price in cents
-  },
-  {
-    id: 1,
-    title: "test product",
-    description: "desc",
-    url: "https://picsum.photos/id/80/300/300",
-    price: 1000, //price in cents
-  },
-];
+const user = useSupabaseUser();
 
 let selectedArray = ref([]);
 
@@ -124,9 +101,6 @@ onMounted(() => {
 const cards = ref(["visa.png", "mastercard.png", "paypal.png", "applepay.png"]);
 
 const totalPriceComputed = computed(() => {
-  // compute sum of prices for all prodcts
-  return 0;
-
   let price = 0;
   userStore.cart.forEach((prod) => {
     price += prod.price;
@@ -135,7 +109,7 @@ const totalPriceComputed = computed(() => {
 });
 
 const selectedRadioFunc = (e) => {
-  // remove item from cart by removing it from the selected array, if it is selected using the radio button
+  //unselect item from checkout by removing it from selectedArray
   if (!selectedArray.value.length) {
     selectedArray.value.push(e);
     return;
@@ -151,17 +125,19 @@ const selectedRadioFunc = (e) => {
 };
 
 const goToCheckout = () => {
-  //   let ids = [];
-  //   userStore.checkout = [];
+  let ids = [];
+  userStore.checkout = [];
+  //get ids of all of the items selected in the shopping cart page
+  selectedArray.value.forEach((item) => ids.push(item.id));
 
-  //   selectedArray.value.forEach((item) => ids.push(item.id));
+  //only keep items selected in the user cart stored in the userStore
+  //select extract the ids of the items selected and use them to filter the items in the cart
+  let res = userStore.cart.filter((item) => {
+    return ids.indexOf(item.id) != -1;
+  });
+  res.forEach((item) => userStore.checkout.push(toRaw(item)));
 
-  //   let res = userStore.cart.filter((item) => {
-  //     //only get the items in the cart that haven't been removed by the user
-  //     return ids.indexOf(item.id) != -1;
-  //   });
-
-  //   res.forEach((item) => userStore.checkout.push(toRaw(item)));
+  //navigate to the checkout page
   return navigateTo("/checkout");
 };
 </script>

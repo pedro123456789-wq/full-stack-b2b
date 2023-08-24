@@ -32,8 +32,16 @@ const props = defineProps([
 ]);
 const { input, placeholder, max, inputType, error } = toRefs(props);
 let isFocused = ref(false);
+
+//computed is used to store dynamic state variables
+//it is better than a function since it only gets called when on of the dependencies gets updated
 const inputComputed = computed({
   get: () => input.value,
-  set: (val) => emit("update:input", val),
+  set: (val) => emit("update:input", val), //emits event when value is updated which is sent back to the parent, since the input prop is updated
 });
+
+//summary:
+//having v-model:inputComputed triggers computed event when text in text input changes
+//computed event changes the value of the input prop
+//having v-model:input=email means that when the input is changed the email variable in the parent element also changes
 </script>

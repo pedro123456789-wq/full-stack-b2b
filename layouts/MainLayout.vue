@@ -1,6 +1,5 @@
 <template>
   <div id="MainLayout" class="w-full fixed z-50">
-    <!-- navbar at the top -->
     <div id="TopMenu" class="w-full bg-[#FAFAFA] border-b md:block hidden">
       <ul
         class="flex items-center justify-end text-xs text-[#333333] font-light px-2 h-10 bg-[#FAFAFA] max-w-[1200px]"
@@ -39,7 +38,6 @@
               : 'border border-[#FAFAFA]'
           "
         >
-          <!-- Account drop down -->
           <Icon name="ph:user-thin" size="17" />
           Account
           <Icon name="mdi:chevron-down" size="15" class="ml-5" />
@@ -82,14 +80,12 @@
         </li>
       </ul>
     </div>
-
-    <!-- main header with search bar and logo -->
     <div id="MainHeader" class="flex items-center w-full bg-white">
       <div
         class="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto"
       >
         <NuxtLink to="/" class="min-w-[170px]">
-          <img width="170" src="/logo.png" alt="logo" />
+          <img width="170" src="/logo.png" alt="Logo" />
         </NuxtLink>
 
         <div class="max-w-[700px] w-full md:block hidden">
@@ -117,28 +113,26 @@
             </div>
 
             <div class="absolute bg-white max-w-[700px] h-auto w-full">
-              <div v-if="false" class="p-1">
+              <div
+                v-if="items && items.data"
+                v-for="item in items.data"
+                class="p-1"
+              >
                 <NuxtLink
-                  to="`/item/1`"
+                  :to="`/item/${item.id}`"
                   class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                 >
                   <div class="flex items-center">
-                    <img
-                      class="rounded-md"
-                      width="40"
-                      src="https://picsum.photos/id/82/300/300"
-                      alt="item image"
-                    />
-                    <div class="truncate ml-2">Test Product</div>
+                    <img class="rounded-md" width="40" :src="item.url" />
+                    <div class="truncate ml-2">{{ item.title }}</div>
                   </div>
-                  <div class="truncate">$100</div>
+                  <div class="truncate">${{ item.price / 100 }}</div>
                 </NuxtLink>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- shopping cart in the top right-->
         <NuxtLink to="/shoppingcart" class="flex items-center">
           <button
             class="relative md:block hidden"
@@ -148,7 +142,7 @@
             <span
               class="absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full"
             >
-              0
+              {{ userStore.cart.length }}
             </span>
             <div class="min-w-[40px]">
               <Icon
@@ -160,7 +154,6 @@
           </button>
         </NuxtLink>
 
-        <!-- '3 stripe' menu for mobile -->
         <button
           @click="userStore.isMenuOverlay = true"
           class="md:hidden block rounded-full p-1.5 -mt-[4px] hover:bg-gray-200"
@@ -171,22 +164,51 @@
     </div>
   </div>
 
+  <!-- show loading indicator if triggered in the userStore global variable -->
+  <Loading v-if="userStore.isLoading" />
+
   <div class="lg:pt-[150px] md:pt-[130px] pt-[80px]" />
-  <!-- slot element contains the html embedded inside the component -->
   <slot />
-  <Footer />
+
+  <Footer v-if="!userStore.isLoading" />
 </template>
 
 <script setup>
 import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
-const user = null;
-const client = null;
-
-let isAccountMenu = ref(false); //state variable
+let isAccountMenu = ref(false);
 let isCartHover = ref(false);
 let isSearching = ref(false);
-let searchItem = ref("");
-let items = ref(null);
+let searchItem = ref(""); //stores the search string in the search bar
+let items = ref(null); //contains the items fetched from the server that match the search string
+
+//useDebounce calls a function after a specified time interval
+const searchByName = useDebounce(async () => {
+  isSearching.value = true;
+  items.value = await useFetch(
+    `/api/prisma/search-by-name/${searchItem.value}`
+  );
+  isSearching.value = false;
+}, 100);
+
+//if user starts typing in the item search bar call this function
+watch(
+  () => searchItem.value,
+  async () => {
+    //if search bar is empty remove all items on display
+    if (!searchItem.value) {
+      setTimeout(() => {
+        items.value = "";
+        isSearching.value = false;
+        return;
+      }, 500);
+    }
+
+    //if there is something in the search bar use it as a search string and return matches
+    searchByName();
+  }
+);
 </script>

@@ -7,7 +7,7 @@
           <span class="pl-4">Orders</span>
         </div>
         <div
-          v-if="orders && orders.data"
+          v-if="orders && orders.data.length > 0"
           v-for="order in orders.data"
           class="text-sm pl-[50px]"
         >
@@ -21,7 +21,7 @@
                 class="flex items-center gap-3 p-1 hover:underline hover:text-blue-500"
                 :to="`/item/${item.productId}`"
               >
-                <img width="40" :src="item.product.url" />
+                <img width="40" :src="item.product.url" alt="product" />
                 {{ item.product.title }}
               </NuxtLink>
             </div>
@@ -45,19 +45,26 @@
 import MainLayout from "~/layouts/MainLayout.vue";
 import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
-// const user = useSupabaseUser();
+const user = useSupabaseUser();
 
 let orders = ref(null);
 
-// onBeforeMount(async () => {
-//     orders.value = await useFetch(`/api/prisma/get-all-orders-by-user/${user.value.id}`)
-// })
+onBeforeMount(async () => {
+  //fetch the orders from the database
+  orders.value = await useFetch(
+    `/api/prisma/get-all-orders-by-user/${user.value.id}`
+  );
 
-// onMounted(() => {
-//     if (!user.value) {
-//         return navigateTo('/auth')
-//     }
+  console.log(orders.data);
+});
 
-//     setTimeout(() => userStore.isLoading = false, 200)
-// })
+onMounted(() => {
+  //if user is not logged in redirect them to the authentication page
+  if (!user.value) {
+    return navigateTo("/auth");
+  }
+
+  //show loading indicator
+  setTimeout(() => (userStore.isLoading = false), 200);
+});
 </script>

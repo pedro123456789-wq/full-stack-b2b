@@ -1,6 +1,3 @@
-<!-- dynamic vue component (extracts props from url)
-e.g if user goes to /items/2, 2 is extracted as the id -->
-
 <template>
   <MainLayout>
     <div id="ItemPage" class="mt-4 max-w-[1200px] mx-auto px-2">
@@ -10,8 +7,12 @@ e.g if user goes to /items/2, 2 is extracted as the id -->
             v-if="currentImage"
             class="rounded-lg object-fit"
             :src="currentImage"
-            alt="selected"
+            alt="current"
           />
+
+          <!-- check if the images have been loaded -->
+          <!-- once they have display them in a carousel at the bottom of the main image -->
+
           <div
             v-if="images[0] !== ''"
             class="flex items-center justify-center mt-2"
@@ -24,15 +25,17 @@ e.g if user goes to /items/2, 2 is extracted as the id -->
                 class="rounded-md object-fit border-[3px] cursor-pointer"
                 :class="currentImage === image ? 'border-[#FF5353]' : ''"
                 :src="image"
-                alt="current"
+                alt="carousel"
               />
             </div>
           </div>
         </div>
         <div class="md:w-[60%] bg-white p-3 rounded-lg">
-          <div v-if="product">
-            <p class="mb-2">Product title</p>
-            <p class="font-light text-[12px] mb-2">Product description</p>
+          <div v-if="product && product.data">
+            <p class="mb-2">{{ product.data.title }}</p>
+            <p class="font-light text-[12px] mb-2">
+              {{ product.data.description }}
+            </p>
           </div>
 
           <div class="flex items-center pt-1.5">
@@ -80,7 +83,7 @@ e.g if user goes to /items/2, 2 is extracted as the id -->
             :disabled="isInCart"
             class="px-6 py-2 rounded-lg text-white text-lg font-semibold bg-gradient-to-r from-[#FF851A] to-[#FFAC2C]"
           >
-            <div v-if="isInCart">Is Added</div>
+            <div v-if="isInCart">Added to cart</div>
             <div v-else>Add to Cart</div>
           </button>
         </div>
@@ -96,41 +99,43 @@ const userStore = useUserStore();
 
 const route = useRoute();
 
-let product = ref("d");
+let product = ref(null);
 let currentImage = ref(null);
 
-// onBeforeMount(async () => {
-//     product.value = await useFetch(`/api/prisma/get-product-by-id/${route.params.id}`)
-// })
+onBeforeMount(async () => {
+  //get the product information from the database
+  product.value = await useFetch(
+    `/api/prisma/get-product-by-id/${route.params.id}`
+  );
+});
 
-// watchEffect(() => {
-//     if (product.value && product.value.data) {
-//         currentImage.value = product.value.data.url
-//         images.value[0] = product.value.data.url
-//         userStore.isLoading = false
-//     }
-// })
+watchEffect(() => {
+  if (product.value && product.value.data) {
+    currentImage.value = product.value.data.url; //set the current image to the base image of the product
+    images.value[0] = product.value.data.url;
+    userStore.isLoading = false;
+  }
+});
 
-// const isInCart = computed(() => {
-//     let res = false
-//     userStore.cart.forEach(prod => {
-//         if (route.params.id == prod.id) {
-//             res = true
-//         }
-//     })
-//     return res
-// })
+//check if the product is in the cart
+const isInCart = computed(() => {
+  let res = false;
+  userStore.cart.forEach((prod) => {
+    if (route.params.id == prod.id) {
+      res = true;
+    }
+  });
+  return res;
+});
 
 const priceComputed = computed(() => {
-  return "10.00";
+  if (product.value && product.value.data) {
+    return product.value.data.price / 100;
+  }
+  return "0.00";
 });
 
-onBeforeMount(async () => {
-  watchEffect(() => {
-    images.value[0] = "https://picsum.photos/id/32/800/800";
-  });
-});
-
+// TODO: replace with 5 images stored in database instead of random images
 const images = ref([
   "",
   "https://picsum.photos/id/212/800/800",
