@@ -22,6 +22,10 @@ import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
 
 onMounted(() => {
+  //only clear cart and checkout when server finishes placing order
+  //otherwise not all products bough get registered in the order
+  userStore.cart = [];
+  userStore.checkout = [];
   setTimeout(() => (userStore.isLoading = false), 300);
 });
 </script>

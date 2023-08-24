@@ -47,3 +47,9 @@ watch(
   }
 );
 </script>
+
+<!-- TODO -->
+<!-- Modify backend to allow sellers to register -->
+<!-- Create page where sellers can list their products -->
+<!-- Finishing touches / logistics / ponderation -->
+<!-- Transfer ownership and set up accounts -->
