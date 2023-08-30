@@ -95,7 +95,7 @@
             >
               <input
                 class="w-full placeholder-gray-400 text-sm pl-3 focus:outline-none"
-                placeholder="Wood flooring"
+                placeholder="Search all products"
                 type="text"
                 v-model="searchItem"
               />
