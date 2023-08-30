@@ -95,7 +95,7 @@
             >
               <input
                 class="w-full placeholder-gray-400 text-sm pl-3 focus:outline-none"
-                placeholder="kitchen accessories"
+                placeholder="Wood flooring"
                 type="text"
                 v-model="searchItem"
               />
@@ -170,7 +170,9 @@
   <div class="lg:pt-[150px] md:pt-[130px] pt-[80px]" />
   <slot />
 
-  <Footer v-if="!userStore.isLoading" />
+  <div class="mt-5 pt-5">
+    <Footer v-if="!userStore.isLoading" />
+  </div>
 </template>
 
 <script setup>
