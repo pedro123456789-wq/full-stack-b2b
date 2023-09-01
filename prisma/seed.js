@@ -5,7 +5,20 @@ const prisma = new PrismaClient();
 
 async function seedProducts() {
   try {
-    await prisma.products.create({
+    await prisma.seller.create({
+      data: {
+        userId: "1234",
+        email: "test@gmail.com",
+        address: "test",
+        zipcode: "123",
+        city: "Town",
+        country: "Land",
+        businessName: "test",
+        is_verified: true,
+      },
+    });
+
+    await prisma.product.create({
       data: {
         title: "Flooring Dummy",
         description:
@@ -13,10 +26,11 @@ async function seedProducts() {
         url: "https://ibb.co/XYn7dYC",
         price: 2500, // EG: 25.00
         category: "flooring",
+        sellerId: "1234",
       },
     });
 
-    await prisma.products.create({
+    await prisma.product.create({
       data: {
         title: "Insulation Dummy",
         description:
@@ -24,10 +38,11 @@ async function seedProducts() {
         url: "https://ibb.co/wd2rVMb",
         price: 1999,
         category: "insulation",
+        sellerId: "1234",
       },
     });
 
-    await prisma.products.create({
+    await prisma.product.create({
       data: {
         title: "Lumber Dummy",
         description:
@@ -35,10 +50,11 @@ async function seedProducts() {
         url: "https://ibb.co/gPFtXCz",
         price: 9999,
         category: "lumber",
+        sellerId: "1234",
       },
     });
 
-    await prisma.products.create({
+    await prisma.product.create({
       data: {
         title: "Piping Dummy",
         description:
@@ -46,10 +62,11 @@ async function seedProducts() {
         url: "https://ibb.co/JQg4cx5",
         price: 5999,
         category: "piping",
+        sellerId: "1234",
       },
     });
 
-    await prisma.products.create({
+    await prisma.product.create({
       data: {
         title: "Roofing Dummy",
         description:
@@ -57,10 +74,11 @@ async function seedProducts() {
         url: "https://ibb.co/z8vDK3W",
         price: 1299,
         category: "roofing",
+        sellerId: "1234",
       },
     });
 
-    await prisma.products.create({
+    await prisma.product.create({
       data: {
         title: "Sliding Dummy",
         description:
@@ -68,6 +86,7 @@ async function seedProducts() {
         url: "https://ibb.co/9gVnjjD",
         price: 6589,
         category: "sliding",
+        sellerId: "1234",
       },
     });
   } catch (error) {

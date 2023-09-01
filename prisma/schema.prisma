@@ -16,7 +16,7 @@ datasource db {
 // === define database tables ===
 
 //table with user addresses
-model Addresses {
+model Address {
   id         Int       @id @default(autoincrement())
   userId     String    @unique @db.Uuid
   name       String
@@ -27,9 +27,22 @@ model Addresses {
   created_at DateTime? @default(now()) @db.Timestamptz(6)
 }
 
+//store seller information
+model Seller {
+  userId String @id
+  email String
+  address String
+  zipcode String
+  city String
+  country String
+  businessName String
+  joined_at DateTime? @default(now()) @db.Timestamptz(6)
+  is_verified Boolean
+  product Product[] //one to many relationship with Product
+}
 
 //list of orders placed by user
-model Orders {
+model Order {
   id         Int         @id @default(autoincrement())
   userId     String      @db.Uuid
   stripeId   String
@@ -39,7 +52,7 @@ model Orders {
   city       String
   country    String
   created_at DateTime?   @default(now()) @db.Timestamptz(6)
-  orderItem  OrderItem[]
+  orderItem  OrderItem[] //one to many relationship with OrderItem
 }
 
 
@@ -49,13 +62,13 @@ model OrderItem {
   orderId    Int
   productId  Int
   created_at DateTime? @default(now()) @db.Timestamptz(6)
-  order      Orders    @relation(fields: [orderId], references: [id])
-  product    Products  @relation(fields: [productId], references: [id])
+  order      Order    @relation(fields: [orderId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
 }
 
 
 //table with information about specific product in order
-model Products {
+model Product {
   id          Int        @id @default(autoincrement())
   title       String
   description String
@@ -63,5 +76,7 @@ model Products {
   price       Int
   created_at  DateTime?  @default(now()) @db.Timestamptz(6)
   category    String
-  orderItem   OrderItem[]
+  sellerId    String
+  orderItem   OrderItem[] //one-to-many relationship with OrderItem 
+  seller      Seller @relation(fields: [sellerId], references: [userId])
 }
