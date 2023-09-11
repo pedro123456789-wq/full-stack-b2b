@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["update:country"]);
+const emit = defineEmits(["update"]);
 
 const props = defineProps(["error"]);
 const { error } = toRefs(props);
@@ -62,12 +62,12 @@ const filteredCountries = computed(() => {
 const selectCountry = (country) => {
   searchQuery.value = country.name;
   countrySelected.value = country.name;
-  emit("update:country", country.value); //send the country selected information back to the parent element
+  emit("update", country.name); //send the country selected information back to the parent element
 };
 
 const reset = () => {
   searchQuery.value = "";
   countrySelected.value = "";
-  emit("update:country", "");
+  emit("update", "");
 };
 </script>

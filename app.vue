@@ -49,7 +49,11 @@ watch(
 </script>
 
 <!-- TODO -->
-<!-- Modify backend to allow sellers to register -->
-<!-- Create page where sellers can list their products -->
-<!-- Finishing touches / logistics / ponderation -->
-<!-- Transfer ownership and set up accounts -->
+<!-- add middleware to provide authentication in seller dashboard -->
+<!-- implement seller endpoints and dashboard -->
+<!-- add image selection for products -->
+<!-- show product seller in product description -->
+
+<!-- consider seller earnings -->
+<!-- add option to view orders left to fulfil and orders fulfilled -->
+<!-- reminder emails for sellers and users -->

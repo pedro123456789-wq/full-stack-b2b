@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   // get all products where the search string ([name]) is contained in the title
-  let items = await prisma.products.findMany({
+  let items = await prisma.product.findMany({
     take: 10, //only return a maximum of 10 products
     where: {
       title: {

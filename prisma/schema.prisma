@@ -31,7 +31,6 @@ model Address {
 model Seller {
   userId String @id
   email String
-  address String
   zipcode String
   city String
   country String

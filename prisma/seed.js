@@ -9,7 +9,6 @@ async function seedProducts() {
       data: {
         userId: "1234",
         email: "test@gmail.com",
-        address: "test",
         zipcode: "123",
         city: "Town",
         country: "Land",

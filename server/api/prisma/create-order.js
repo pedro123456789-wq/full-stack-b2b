@@ -6,7 +6,7 @@ export default eventHandler(async (event) => {
   const body = await readBody(event);
 
   // add new entry to the order table
-  const order = await prisma.orders.create({
+  const order = await prisma.order.create({
     data: {
       userId: body.userId,
       stripeId: body.stripeId,

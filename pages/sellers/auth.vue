@@ -51,7 +51,7 @@
 
             <div v-if="state === 'Register'">
               <CountrySelection
-                @update:country="(newValue) => (country = newValue)"
+                @update="(v) => (country = v)"
                 :error="errorCountry"
               />
               <TextInput
@@ -123,6 +123,8 @@
 </template>
 
 <script setup>
+import { navigateTo, useFetch } from "nuxt/app";
+
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 
@@ -146,9 +148,21 @@ let errorPhone = ref("");
 
 let success = ref(false);
 
+watch(state, () => {
+  // clear error messages when user changes from login to resgistration section and vice-versa
+  errorEmail.value = "";
+  errorPassword.value = "";
+  errorCountry.value = "";
+  errorCity.value = "";
+  errorZip.value = "";
+  errorBusiness.value = "";
+  errorPhone.value = "";
+});
+
 watchEffect(() => {
+  //if user is logged in try to navigate to the sellers dashboard
   if (user.value) {
-    return navigateTo("/");
+    return navigateTo("/sellers/dashboard");
   }
 });
 
@@ -168,7 +182,7 @@ const submit = async () => {
       //login successful navigate to home page
       errorEmail.value = "";
       errorPassword.value = "";
-      return navigateTo("/");
+      return navigateTo("/sellers/dashboard");
     }
   } else if (state.value === "Register") {
     errorPassword.value = "";
@@ -224,9 +238,21 @@ const submit = async () => {
       errorEmail.value = error.message;
       errorPassword.value = " ";
     } else {
-      errorEmail.value = "";
-      errorPassword.value = "";
-      success.value = true; //account is created successfully and confirmation email has been sent
+      //the client.auth.signUp creates a user in the authentication section
+      //the request below connects this user to its seller information in the Seller table
+      await useFetch("/api/prisma/register-seller", {
+        method: "POST",
+        body: {
+          userId: data.user.id,
+          email: email.value,
+          zipcode: zipcode.value,
+          city: city.value,
+          country: country.value,
+          businessName: businessName.value,
+        },
+      });
+
+      return navigateTo("/sellers/dashboard");
     }
   }
 };
