@@ -25,7 +25,7 @@
             <button
               class="p-10 font-semibold"
               :class="state === 'Register' ? 'text-red-500' : ''"
-              @click="state = 'Register'"
+              @click="state = 'Register'; email = ''; password = '';"
             >
               Register as a seller
             </button>

@@ -5,8 +5,6 @@
 export default defineNuxtRouteMiddleware((from, to) => {
   const user = useSupabaseUser();
 
-  console.log("middleware");
-
   //user is not sigedn in
   if (!user.value && to.fullPath == "/sellers/dashboard") {
     return navigateTo("/sellers/auth");

@@ -21,9 +21,17 @@
       </button>
     </div>
 
+    <!-- show the products sold by the seller -->
     <div v-if="state === 'products'">
       <div v-for="product in products">
-        <ProductComponent :product="product" />
+        <SellerProduct :product="product"/>
+      </div>
+    </div>
+
+    <!-- show the orders received by the seller -->
+    <div v-if="state === 'orders'">
+      <div v-for="order in orders">
+        <SellerOrder :order="order" />
       </div>
     </div>
   </div>
@@ -39,10 +47,17 @@ let orders = ref([]);
 definePageMeta({ middleware: "seller-auth" });
 
 watchEffect(() => {
+  //get all of the seller's products
   useFetch(`/api/prisma/get-products-by-seller/${user.value.id}`).then(
     (response) => {
       products.value = response.data.value;
-      console.log(products.value);
+    }
+  );
+
+  //get all of the orders received by the seller
+  useFetch(`/api/prisma/get-orders-by-seller/${user.value.id}`).then(
+    (response) => {
+      orders.value = response.data.value;
     }
   );
 });

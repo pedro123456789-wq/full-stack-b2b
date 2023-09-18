@@ -23,9 +23,11 @@ async function seedProducts() {
         description:
           "standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         url: "https://ibb.co/XYn7dYC",
-        price: 2500, // EG: 25.00
+        price: 2500, // e.g.: 25.00
         category: "flooring",
         sellerId: "1234",
+        deliveryTimeDays: 2, 
+        image1: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695062714/cld-sample-5.jpg'
       },
     });
 
@@ -38,6 +40,7 @@ async function seedProducts() {
         price: 1999,
         category: "insulation",
         sellerId: "1234",
+        deliveryTimeDays: 2
       },
     });
 
@@ -50,6 +53,7 @@ async function seedProducts() {
         price: 9999,
         category: "lumber",
         sellerId: "1234",
+        deliveryTimeDays: 2
       },
     });
 
@@ -62,6 +66,7 @@ async function seedProducts() {
         price: 5999,
         category: "piping",
         sellerId: "1234",
+        deliveryTimeDays: 2
       },
     });
 
@@ -74,6 +79,7 @@ async function seedProducts() {
         price: 1299,
         category: "roofing",
         sellerId: "1234",
+        deliveryTimeDays: 2
       },
     });
 
@@ -86,6 +92,7 @@ async function seedProducts() {
         price: 6589,
         category: "sliding",
         sellerId: "1234",
+        deliveryTimeDays: 2
       },
     });
   } catch (error) {

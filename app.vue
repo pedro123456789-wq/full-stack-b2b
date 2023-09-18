@@ -49,10 +49,9 @@ watch(
 </script>
 
 <!-- TODO -->
-<!-- add middleware to provide authentication in seller dashboard -->
-<!-- implement seller endpoints and dashboard -->
-<!-- add image selection for products -->
-<!-- show product seller in product description -->
+<!-- Add html code for orders and products page in seller dashboard -->
+<!-- Show the cleared earnings and the expected earnings -->
+
 
 <!-- consider seller earnings -->
 <!-- add option to view orders left to fulfil and orders fulfilled -->

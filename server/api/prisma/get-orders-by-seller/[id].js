@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   let orederedItems = await prisma.orderItem.findMany();
   const output = [];
 
-  for (const item in orederedItems) {
+  for (const item of orederedItems) {
     //for each order item find the product associated with the order
     const product = await prisma.product.findFirst({
       where: { id: item.productId },
@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
       });
 
       output.push({
+        id: item.id, 
         product: product,
         date: order.created_at,
         address: order.address,
@@ -38,3 +39,4 @@ export default defineEventHandler(async (event) => {
 //add ability to edit seller products
 //add option to mark order as completed for seller
 //allow seller to see their earnings
+//add delivery time field to the orders
