@@ -51,7 +51,12 @@ watch(
 <!-- TODO -->
 <!-- Add html code for orders and products page in seller dashboard -->
 <!-- Show the cleared earnings and the expected earnings -->
-
+<!-- Finish the item page for the buyers -->
+<!-- Finish the orders section of the seller dashboard:
+      Show total earnings
+      allow orders to be marked as complete
+      remove the cancel order button
+-->
 
 <!-- consider seller earnings -->
 <!-- add option to view orders left to fulfil and orders fulfilled -->
