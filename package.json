@@ -28,6 +28,7 @@
     "@pinia/nuxt": "^0.4.8",
     "@prisma/client": "^5.2.0",
     "@stripe/stripe-js": "^1.52.0",
+    "cloudinary": "^1.40.0",
     "nuxt-lodash": "^2.4.1",
     "pinia": "^2.0.34",
     "prisma": "^4.12.0",

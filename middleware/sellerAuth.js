@@ -6,12 +6,14 @@ export default defineNuxtRouteMiddleware((from, to) => {
   const user = useSupabaseUser();
 
   //user is not sigedn in
-  if (!user.value && to.fullPath == "/sellers/dashboard") {
+  if (!user.value && to.fullPath != "/sellers/auth") {
     return navigateTo("/sellers/auth");
   }
 
   if (user.value) {
     const userId = user.value.id;
+
+    // TODO: add check to see if the user is verified
     useFetch(`/api/prisma/check-user-is-seller/${userId}`).then((response) => {
       if (!response.data.value) {
         //user is not a seller
@@ -20,3 +22,4 @@ export default defineNuxtRouteMiddleware((from, to) => {
     });
   }
 });
+

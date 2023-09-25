@@ -19,15 +19,15 @@
       </div>
     </div>
 
-    <img class="rounded-md md:w-[150px] w-[90px]" :src="product.url" />
+    <img
+      class="rounded-md md:w-[150px] w-[90px]"
+      :src="product.image1"
+      alt="product"
+    />
 
     <div class="overflow-hidden pl-2 w-full">
       <div class="flex items-center justify-between w-full">
         <div class="flex items-center justify-between truncate">
-          <span
-            class="sm:block hidden bg-[#FD374F] text-white text-[9px] font-semibold px-1.5 rounded-sm min-w-[80px]"
-            >Welcome Deal</span
-          >
           <div class="truncate sm:pl-2">{{ product.title }}</div>
         </div>
         <button
@@ -43,10 +43,8 @@
       </div>
 
       <p class="text-[#009A66] text-xs font-semibold pt-1">
-        Free 11-day delivery over ￡8.28
+        Delivery time: {{ product.deliveryTimeDays }} days
       </p>
-
-      <p class="text-[#009A66] text-xs font-semibold pt-1">Free Shipping</p>
 
       <div class="flex items-center justify-end">
         <button

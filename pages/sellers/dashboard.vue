@@ -2,6 +2,12 @@
   <div>
     <header class="bg-red-500 p-4 text-white">
       <h1 class="text-2xl font-semibold">Seller Dashboard</h1>
+      <div class="flex justify-left space-evenly">
+        <div v-if="user">
+          <h3>{{ user.email }}</h3>
+          <h3>Earnings: ${{ earnings }}</h3>
+        </div>
+      </div>
     </header>
 
     <div class="flex justify-center space-around">
@@ -23,14 +29,30 @@
 
     <!-- show the products sold by the seller -->
     <div v-if="state === 'products'">
-      <div v-for="product in products">
-        <SellerProduct :product="product"/>
+      <div
+        class="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 p-4"
+      >
+        <div v-for="product in products">
+          <SellerProduct :product="product" />
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button
+          class="bg-green-500 p-2 rounded text-white"
+          @click="navigateTo('/sellers/new-product')"
+        >
+          Add new product
+        </button>
       </div>
     </div>
 
     <!-- show the orders received by the seller -->
     <div v-if="state === 'orders'">
-      <div v-for="order in orders">
+      <div
+        v-for="order in orders"
+        class="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 p-4"
+      >
         <SellerOrder :order="order" />
       </div>
     </div>
@@ -44,10 +66,7 @@ let state = ref("products");
 let products = ref([]);
 let orders = ref([]);
 
-definePageMeta({ middleware: "seller-auth" });
-
-watchEffect(() => {
-  //get all of the seller's products
+onBeforeMount(async () => {
   useFetch(`/api/prisma/get-products-by-seller/${user.value.id}`).then(
     (response) => {
       products.value = response.data.value;
@@ -60,5 +79,21 @@ watchEffect(() => {
       orders.value = response.data.value;
     }
   );
+});
+
+onMounted(() => {
+  if (!user.value) {
+    navigateTo("/sellers/auth");
+  }
+});
+
+const earnings = computed(() => {
+  let total = 0;
+
+  orders.value.forEach((order) => {
+    if (order.isCompleted) total += order.product.price / 100;
+  });
+
+  return total.toFixed(2);
 });
 </script>

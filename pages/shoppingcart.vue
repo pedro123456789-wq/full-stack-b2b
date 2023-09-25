@@ -31,12 +31,6 @@
             <p>Select the items to checkout with</p>
           </div>
 
-          <div class="bg-[#FEEEEF] rounded-lg p-4 mt-4">
-            <div class="text-red-500 font-bold">
-              Welcome Deal applicable on 1 item only
-            </div>
-          </div>
-
           <div id="Items" class="bg-white rounded-lg p-4 mt-4">
             <div v-for="product in userStore.cart">
               <CartItem

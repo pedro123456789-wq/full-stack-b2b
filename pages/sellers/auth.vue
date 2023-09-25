@@ -167,6 +167,8 @@ watchEffect(() => {
 });
 
 const submit = async () => {
+  console.log(state.value);
+  
   if (state.value === "Log In") {
     //if login section is selected login
     const { data, error } = await client.auth.signInWithPassword({

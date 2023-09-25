@@ -54,8 +54,6 @@ onBeforeMount(async () => {
   orders.value = await useFetch(
     `/api/prisma/get-all-orders-by-user/${user.value.id}`
   );
-
-  console.log(orders.data);
 });
 
 onMounted(() => {

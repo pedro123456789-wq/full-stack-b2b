@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
         date: order.created_at,
         address: order.address,
         zipCode: order.zipcode,
+        isCompleted: item.completed
       });
     }
   }

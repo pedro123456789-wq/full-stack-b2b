@@ -82,6 +82,8 @@ model Product {
   image3      String @default("null")
   image4      String @default("null")
   image5      String @default("null")
+  isDeleted   Boolean @default(false) //when product is deleted, we still need to reference for past orders
+                                      //however we don't want it to be visible for the seller and other users
   orderItem   OrderItem[] //one-to-many relationship with OrderItem 
   seller      Seller @relation(fields: [sellerId], references: [userId])
 }

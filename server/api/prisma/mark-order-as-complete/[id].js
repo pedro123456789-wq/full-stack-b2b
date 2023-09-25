@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   //mark order as complete
   const completeOrder = await prisma.orderItem.update({
     where: {
-        id: event.context.params.id
+        id: Number(event.context.params.id)
     }, 
     data: {
         completed: true
