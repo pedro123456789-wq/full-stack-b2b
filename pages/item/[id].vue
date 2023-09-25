@@ -1,11 +1,11 @@
 <template>
   <MainLayout>
     <div id="ItemPage" class="mt-4 max-w-[1200px] mx-auto px-2">
-      <div class="md:flex gap-4 justify-between mx-auto w-full">
+      <div class="md:flex gap-4 justify-between mx-auto w-full h-full">
         <div class="md:w-[40%]">
           <img
             v-if="currentImage"
-            class="rounded-lg object-fit"
+            class="rounded-lg w-96 h-64"
             :src="currentImage"
             alt="current"
           />
@@ -23,7 +23,7 @@
                 @mouseover="currentImage = image"
                 @click="currentImage = image"
                 width="70"
-                class="rounded-md object-fit border-[3px] cursor-pointer"
+                class="rounded-md object-fit border-[3px] cursor-pointer w-32 h-32"
                 :class="currentImage === image ? 'border-[#FF5353]' : ''"
                 :src="image"
                 alt="carousel"

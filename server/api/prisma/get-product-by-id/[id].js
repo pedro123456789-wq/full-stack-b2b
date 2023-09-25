@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   // get product with given id
   let product = await prisma.product.findFirst({
-    where: { id: Number(event.context.params.id) },
+    where: { id: Number(event.context.params.id), isDeleted: false },
   });
 
   return product;

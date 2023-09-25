@@ -104,7 +104,7 @@
                   class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                 >
                   <div class="flex items-center">
-                    <img class="rounded-md" width="40" :src="item.url" />
+                    <img class="rounded-md" width="40" :src="item.image1" alt="item"/>
                     <div class="truncate ml-2">{{ item.title }}</div>
                   </div>
                   <div class="truncate">${{ item.price / 100 }}</div>
@@ -151,7 +151,7 @@
   <div class="lg:pt-[150px] md:pt-[130px] pt-[80px]" />
   <slot />
 
-  <div class="mt-5 pt-5">
+  <div class="mt-5 pt-5 static">
     <Footer v-if="!userStore.isLoading" />
   </div>
 </template>

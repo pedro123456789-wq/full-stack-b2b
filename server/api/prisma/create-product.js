@@ -39,7 +39,6 @@ export default eventHandler(async (event) => {
       category: body.category,
       deliveryTimeDays: Number(body.deliveryTimeDays),
       sellerId: body.sellerId,
-      url: '', 
       image1: urls[0],
       image2: urls[1],
       image3: urls[2],

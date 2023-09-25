@@ -7,8 +7,8 @@ async function seedProducts() {
   try {
     await prisma.seller.create({
       data: {
-        userId: "1234",
-        email: "test@gmail.com",
+        userId: "5eca9350-03f3-43c8-bf88-c3a438f0afe5",
+        email: "pedro@gmail.com",
         zipcode: "123",
         city: "Town",
         country: "Land",
@@ -19,80 +19,31 @@ async function seedProducts() {
 
     await prisma.product.create({
       data: {
-        title: "Flooring Dummy",
+        title: "Luxury wooden flooring",
         description:
-          "standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        url: "https://ibb.co/XYn7dYC",
-        price: 2500, // e.g.: 25.00
+          "High quality wooden floor, made by traditional Italian carpenteers.",
+        price: 250000, // e.g.: 2500.00
         category: "flooring",
-        sellerId: "1234",
+        sellerId: "5eca9350-03f3-43c8-bf88-c3a438f0afe5",
         deliveryTimeDays: 2, 
-        image1: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695062714/cld-sample-5.jpg'
+        image1: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695669178/yzydxgkhgjwoxrklrkt0.jpg', 
+        image2: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695669178/wfiauzyg7ggzwmxux1ls.webp', 
+        image3: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695669177/vfla6mrgcstfbrkvtiux.webp'
       },
     });
 
     await prisma.product.create({
       data: {
-        title: "Insulation Dummy",
+        title: "Luxury sliding glass door",
         description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        url: "https://ibb.co/wd2rVMb",
+          "This outstandingly well crafted product will take your home to the next level, giving it a touch of class and a modern feel.",
         price: 1999,
         category: "insulation",
-        sellerId: "1234",
-        deliveryTimeDays: 2
-      },
-    });
-
-    await prisma.product.create({
-      data: {
-        title: "Lumber Dummy",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        url: "https://ibb.co/gPFtXCz",
-        price: 9999,
-        category: "lumber",
-        sellerId: "1234",
-        deliveryTimeDays: 2
-      },
-    });
-
-    await prisma.product.create({
-      data: {
-        title: "Piping Dummy",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        url: "https://ibb.co/JQg4cx5",
-        price: 5999,
-        category: "piping",
-        sellerId: "1234",
-        deliveryTimeDays: 2
-      },
-    });
-
-    await prisma.product.create({
-      data: {
-        title: "Roofing Dummy",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        url: "https://ibb.co/z8vDK3W",
-        price: 1299,
-        category: "roofing",
-        sellerId: "1234",
-        deliveryTimeDays: 2
-      },
-    });
-
-    await prisma.product.create({
-      data: {
-        title: "Sliding Dummy",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        url: "https://ibb.co/9gVnjjD",
-        price: 6589,
-        category: "sliding",
-        sellerId: "1234",
-        deliveryTimeDays: 2
+        sellerId: "5eca9350-03f3-43c8-bf88-c3a438f0afe5",
+        deliveryTimeDays: 10, 
+        image1: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695669177/witvecawd9w49nnnptzw.jpg', 
+        image2: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695669177/gn4kppic50c5sqw1qi1q.webp', 
+        image3: 'https://res.cloudinary.com/dp6ggctps/image/upload/v1695669177/rrykid0fnz530tx1boq3.jpg', 
       },
     });
   } catch (error) {

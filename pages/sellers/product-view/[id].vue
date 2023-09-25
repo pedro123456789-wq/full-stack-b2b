@@ -148,16 +148,14 @@ watchEffect(() => {
 });
 
 const deleteProduct = () => {
-  useFetch(`/api/prisma/delete-product`, {
+  useFetch('/api/prisma/delete-product', {
     method: 'PUT', 
     body: {
       sellerId: user.value.id, 
       productId: Number(route.params.id)
     }
   }).then((response) => {
-    if (response.data.value){
-      navigateTo('/sellers/dashboard');
-    }
-  })
+      console.log(response.data);
+  });
 };
 </script>

@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
         contains: event.context.params.id,
         mode: "insensitive",
       },
+      isDeleted: false
     },
   });
 
