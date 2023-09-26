@@ -19,7 +19,7 @@
           >
             <div v-for="image in images">
               <img
-                v-if="image != 'null'"
+                v-if="image != 'none'"
                 @mouseover="currentImage = image"
                 @click="currentImage = image"
                 width="70"

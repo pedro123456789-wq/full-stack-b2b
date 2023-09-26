@@ -29,7 +29,7 @@
       <div class="max-w-[300px]" v-if="isLoading">
         <span class="text-md text-green-500">Creating product ...</span>
 
-        <Icon name="carbon:loading" class="text-yellow-500 text-lg ml-3">
+        <Icon name="carbon:time" class="text-green-500 text-lg ml-3">
         </Icon>
       </div>
 

@@ -56,7 +56,7 @@
               :class="currentImage === image ? 'border-[#FF5353]' : ''"
               :src="image"
               alt="carousel"
-              v-if="image !== 'null'"
+              v-if="image !== 'none'"
             />
           </div>
         </div>
@@ -149,13 +149,15 @@ watchEffect(() => {
 
 const deleteProduct = () => {
   useFetch('/api/prisma/delete-product', {
-    method: 'PUT', 
+    method: 'PATCH', 
     body: {
       sellerId: user.value.id, 
       productId: Number(route.params.id)
     }
   }).then((response) => {
-      console.log(response.data);
+      if (response.data.value){
+        return navigateTo('/sellers/dashboard');
+      }
   });
 };
 </script>

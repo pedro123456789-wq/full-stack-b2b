@@ -48,6 +48,11 @@ watch(
 );
 </script>
 
-<!-- TODO -->
-<!-- add option to view orders left to fulfil and orders fulfilled -->
-<!-- reminder emails for sellers and users -->
+<!-- tests -->
+<!-- Create product - passed -->
+<!-- Delete product - passed -->
+<!-- Create order for product - passed-->
+<!-- Create new seller - passed -->
+<!-- Log in as seller - passed -->
+<!-- Mark order as complete - passed -->
+<!-- Deploy -->

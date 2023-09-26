@@ -56,16 +56,17 @@
 </template>
 
 <script setup>
-const props = defineProps(["order"]);
-const { order } = toRefs(props);
+const props = defineProps(["order", "index"]);
+const { order, index } = toRefs(props);
 let isComplete = ref(order.value.isCompleted);
+const emit = defineEmits(["orderUpdate"]);
+
 
 const priceComputed = computed(() => {
   return order.value.product.price / 100;
 });
 
 const stateComputed = computed(() => {
-  console.log(order.value);
   const dateOrdered = new Date(order.value.date);
   const timeElapsed = Date.now() - dateOrdered.getTime(); //time elapsed in miliseconds
   const daysElapsed = timeElapsed / (1000 * 60 * 60 * 24);
@@ -81,6 +82,8 @@ const markComplete = () => {
   useFetch(`/api/prisma/mark-order-as-complete/${order.value.id}`).then((response) => {
     if (response.data.value){
       isComplete.value = true;
+      order.value.isCompleted = true;
+      emit('orderUpdate', {index, order});
     }
   })
 }

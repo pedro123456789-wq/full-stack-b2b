@@ -37,6 +37,10 @@
         </div>
       </div>
 
+      <div v-if="products.length === 0">
+        <h1 class="text-center text-lg font-bold p-5 m-5">You don't have any products yet ...</h1>
+      </div>
+
       <div class="text-center">
         <button
           class="bg-green-500 p-2 rounded text-white"
@@ -50,10 +54,16 @@
     <!-- show the orders received by the seller -->
     <div v-if="state === 'orders'">
       <div
-        v-for="order in orders"
         class="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 p-4"
-      >
-        <SellerOrder :order="order" />
+      > 
+        <div v-for="order in orders">
+          <SellerOrder :order="order" :index="orders.indexOf(order)"
+                      @order-update="updateOrder"/>
+        </div>
+      </div>
+
+      <div v-if="orders.length === 0">
+        <h1 class="text-center p-5 text-lg mt-5 font-bold">No orders yet...</h1>
       </div>
     </div>
   </div>
@@ -83,7 +93,7 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   if (!user.value) {
-    navigateTo("/sellers/auth");
+    return navigateTo("/sellers/auth");
   }
 });
 
@@ -96,4 +106,11 @@ const earnings = computed(() => {
 
   return total.toFixed(2);
 });
+
+const updateOrder = (e) => {
+  const index = e.index;
+  const order = e.order;
+
+  orders.value[index] = order;
+}
 </script>

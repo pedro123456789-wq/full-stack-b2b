@@ -8,7 +8,7 @@ export default eventHandler(async (event) => {
   const sellerId = body.sellerId;
   const productId = body.productId;
 
-  const productObject = prisma.product.findFirst({
+  const productObject = await prisma.product.findFirst({
     where: {
       id: productId,
     },
@@ -19,12 +19,18 @@ export default eventHandler(async (event) => {
     return false;
   }
 
-  return await prisma.product.update({
-    where: {
-      id: productId,
-    },
-    data: {
-      isDeleted: true,
-    },
-  });
+  if (sellerId === productObject.sellerId){
+    const resp = await prisma.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        isDeleted: true,
+      },
+    });
+  
+    return true;
+  }else{
+    return false;
+  }
 });

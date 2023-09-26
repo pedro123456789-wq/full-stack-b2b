@@ -26,6 +26,8 @@ export default eventHandler(async (event) => {
         .upload(image, { resource_type: "image" })
         .then((response) => {
           urls[i] = response.url;
+        }).catch((error) => {
+          console.log('Cloudinary error');
         });
     }
   }
